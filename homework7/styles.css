@@ -21,3 +21,25 @@
 .axis--y path {
     /* display: none; */
 }
+
+
+/* Container para input e output do slider */
+.in-out-container {
+    display: flex;
+    height: 40px;
+}
+
+.in-out-container > input {
+    margin-left: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 30px;
+}
+
+
+.in-out-container > output {
+    margin-left: 5px;
+    padding-top: 0;
+    height: 30px;
+    font-size: 22px;
+}

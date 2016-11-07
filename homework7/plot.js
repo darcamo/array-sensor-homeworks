@@ -128,7 +128,7 @@ function handle_radio_button_change() {
 
 
 function update_sep_output_value(value) {
-	document.querySelector('#sep_value').value = value;
+	document.querySelector('#sep_value').value = parseFloat(value).toFixed(1);
 }
 
 
