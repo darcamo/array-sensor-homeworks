@@ -1,0 +1,229 @@
+# -*- after-save-hook: org-latex-export-to-pdf; org-export-in-background: t; -*-
+#+TITLE:Solutions to Homework 1
+#+AUTHOR:Darlan Cavalcante Moreira
+#+EMAIL:darcamo@gmail.com
+#+SETUPFILE: ~/.emacs.d/lisp/org-setup-file-template/setup.org
+#+options: num:nil
+#+HTML_MATHJAX: path:/home/darlan/Dropbox/MathJax-master/MathJax.js?config=default.js  align: left indent: 5em tagside: left font: Neo-Euler
+#+LATEX_HEADER: \usepackage{cancel}
+
+#+LATEX_HEADER: \renewcommand{\theenumi}{\alph{enumi}}
+#+HTML_HEAD: <style>ol {list-style-type: lower-latin;}</style>
+
+#+HTML: \(\require{cancel}\)
+
+
+* Exercise 1
+  a. \(\underbrace{\mtA}_{m \times n} = \underbrace{\mtU}_{m \times m} \mtSigma \underbrace{\mtV^H}_{n \times n} \Rightarrow \mtSigma\) has the same
+     dimension as \(\mtA\), that is, \(m \times n\).
+     
+     \(\mtSigma\) is a diagonal matrix whose diagonal elements correspond to
+     the singular values of \(\mtA\). Since the rank of \(\mtA\) is \(r\), then
+     only \(r\) singular values are different of zero. Thus, \(\mtSigma_1\) is
+     a diagonal matrix with dimension \(r \times r\).
+
+     Since \(\mtA = \mtU_1 \mtSigma_1 \mtV_1^H\), then \(\mtU_1\) has as many
+     rows as \(\mtA\) and \(\mtV_1^H\) has as many columns as
+     \(\mtA\). Therefore, we conclude that the dimensions are
+
+     - \(\mtU_1 \rightarrow m \times r\)
+     - \(\mtU_2 \rightarrow  m \times (n-r)\)
+     - \(\mtV_1 \rightarrow n \times r\)
+     - \(\mtV_2 \rightarrow (n-r) \times r\)
+
+     Since \(\mtA^+ = \underbrace{\mtV_1}_{n \times r} \mtSigma_1^{-1}
+     \underbrace{\mtU_1^H}_{r \times m}\), then \(\mtA^+\) has dimension \(n
+     \times m\).
+
+  b. We know that both \(\mtU\) and \(\mtV\) are unitary matrices. That means
+     that 
+     \[\begin{cases}\vtU_i^H\vtU_j = 1 \quad \text{if} \quad  i=j \\ \vtU_i^H\vtU_j = 0 \quad \text{if} \quad i \neq j\end{cases}\]
+     where \(\vtU_i\) is the i-$th$ column of \(\mtU\).
+
+     We can write \(\mtU_1 = \begin{bmatrix} \vtU_1 \; \vtU_2 \; \ldots \; \vtU_r \end{bmatrix}\), where \(\mtU_1\) has \(m\) rows and \(r\) columns.
+
+     \[\mtU_1^H \mtU_1 = \begin{bmatrix} \vtU_1^H\vtU_1 & \vtU_1^H\vtU_2 & & \vtU_1^H\vtU_r\\ \vtU_2^H\vtU_1 & \vtU_2^H\vtU_2 & \ldots & \vtU_2^H\vtU_r \\ \vdots & \vdots & & \vdots \\ \vtU_r^H\vtU_1 & \vtU_r^H\vtU_2 & & \vtU_r^H\vtU_r \end{bmatrix} = \begin{bmatrix} 1 & & \ldots & \\  & 1 & & \\ & & \ddots\\ & & & 1 \end{bmatrix} = \boldsymbol{1}_{r \times r}\]
+
+     The same is valid for \(\mtV_1^H\mtV_1\).
+
+  c. \(\mtA = \mtU_1 \mtSigma_1 \mtV_1^H \)
+
+     \(\mtA^+ = \mtV_1 \mtSigma_1^{-1} \mtU_1^H\)
+
+     We know that \(\mtU_1^H\mtU_1 = \mtI\), \(\mtV_1^H\mtV_1 = \mtI\) and
+     \(\mtSigma_1^{-1}\) exists (since \(\mtSigma_1\) is a diagonal matrix
+     with elements > 0). Let's then calculate the values of \(\mtA \mtA^+\) and \(\mtA^+ \mtA\). 
+     We have that
+     \begin{align*} \mtA \mtA^+ & = \mtU_1 \mtSigma_1 \underbrace{\mtV_1^H \mtV_1}_{\mtI} \mtSigma_1^{-1} \mtU_1^H \\ 
+                                & = \mtU_1 \underbrace{\mtSigma_1 \mtSigma_1^{-1}}_{\mtI} \mtU_1^H \\ 
+                                & = \mtU_1 \mtU_1^H
+     \end{align*}
+     \begin{align*} \mtA^+ \mtA & = \mtV_1 \mtSigma_1^{-1} \underbrace{\mtU_1^H \mtU_1}_{\mtI} \mtSigma_1 \mtV_1^H \\
+                                & = \mtV_1 \underbrace{\mtSigma_1^{-1} \mtSigma_1}_{\mtI} \mtV_1^H \\
+                                & = \mtV_1 \mtV_1^H
+     \end{align*}
+     
+     Now we can easily prove the four Moore-Penrose conditions:
+     - \(\mtA \mtA^+ \mtA = \mtU_1 \mtSigma_1 \underbrace{\mtV_1^H \mtV_1}_{\mtI} \mtV_1^H = \mtA\)
+     - \(\mtA^+ \mtA \mtA^+ = \mtV_1 \mtSigma_1^{-1} \underbrace{\mtU_1^H \mtU_1}_{\mtI} \mtU_1^H = \mtA^+\)
+     - \((\mtA\mtA^+)^H = (\mtU_1 \mtU_1^H)^H = (\mtU_1^H)^H \mtU_1^H = \mtU_1 \mtU_1^H = \mtA\mtA^+\)
+     - \((\mtA^+\mtA)^H = (\mtV_1 \mtV_1^H)^H = (\mtV_1^H)^H \mtV_1^H = \mtV_1 \mtV_1^H = \mtA^+\mtA\)
+
+
+* Exercise 2
+  A. 
+     The three equations are:
+     - \(a+b+c+d = 1\)
+     - \(a+c = b+d \Rightarrow a-b+c-d = 0\)
+     - \(a+b=c+d \Rightarrow a+b-c-d = 0\)
+       
+     They can be written in matrix form as
+     \begin{align*}
+       \mtD \cdot \begin{bmatrix} a\\b\\c\\d \end{bmatrix} = \vtE \\
+       \begin{bmatrix} 1 & 1 & 1 & 1\\1 & -1 & 1 & -1\\1 & 1 & -1 & -1 \end{bmatrix} \cdot \begin{bmatrix} a\\b\\c\\d \end{bmatrix} = \vtE
+     \end{align*}
+
+  B. \begin{equation*} 
+     \begin{cases}
+       a + b + c = 1-d \\
+       a-b+c = d \\
+       a+b-c = d
+       \end{cases}
+     \end{equation*}
+     
+     This corresponds in matrix form to
+     \begin{equation*} \begin{bmatrix} 1 & 1 & 1 \\ 1 & -1 & 1 \\ 1 & 1 & -1 \end{bmatrix} \begin{bmatrix} a\\b\\c \end{bmatrix} = \begin{bmatrix} 1-d\\d\\d \end{bmatrix} \end{equation*}
+
+     Summing the last two equations we get
+     \[2a = 2d \Rightarrow a = d\]
+
+     Replace \(a\) and sum the first two equations. Then we get
+     \begin{align*} 
+       2d+2d & = 1 \\ 
+       2c & = 1-2d \\
+       c &= \frac{1-2d}{2}
+     \end{align*}
+
+     Now replace the values in the second equation and we get
+     \begin{align*} 
+     b = a+c-d = d + \frac{1-2d}{2} - d \\
+     b = \frac{1-2d}{2}
+     \end{align*}
+
+  C. From (4) we get that
+     \begin{align*} 
+       a(a+b) + c(a+b) = a \\
+       (a+c)(a+b) = a\\
+       \left(d+ \frac{1-2d}{2}\right)^2 = d \\
+       \left(\frac{2d + 1 -2d}{2} \right)^2 = d \Rightarrow d = \left(\frac{1}{2}\right)^2 = \frac{1}{4}
+     \end{align*}
+
+     Therefore, we have that
+     - \(a = \frac{1}{4}\)
+     - \(b = \frac{1}{2} - \frac{1}{4} = \frac{1}{4}\)
+     - \(c = b = \frac{1}{4}\)
+     - \(d = \frac{1}{4}\)
+    
+  D. The pseudo inverse \(\mtA^+\) is then given by
+     \begin{equation*}
+       \begin{aligned} \mtA^+ = \begin{bmatrix} \frac{1}{4} & \frac{1}{4} \\ \frac{1}{4} & \frac{1}{4}\end{bmatrix} \end{aligned}
+     \end{equation*}
+
+  E. Following the definition in (2) we get
+     \[\begin{aligned}\mtA^+ & = \frac{1}{2} \cdot \begin{bmatrix} -1\\-1 \end{bmatrix} \left[\frac{1}{2}\right]\begin{bmatrix} -1 & -1\end{bmatrix} \\ & = \frac{1}{4} \cdot \begin{bmatrix} -1\\-1 \end{bmatrix} \begin{bmatrix}-1 & -1\end{bmatrix} \\ & = \frac{1}{4} \begin{bmatrix} 1 & 1\\1 & 1 \end{bmatrix} = \begin{bmatrix} \frac{1}{4} & \frac{1}{4} \\ \frac{1}{4} & \frac{1}{4}\end{bmatrix}\end{aligned}\]
+* Exercise 3
+  A. 
+     For \(\mtP\) to be a projection matrix to a subspace it must satisfy three
+     properties:
+     - \(\mtP = \mtP^H\);
+     - \(\mtP = \mtP^2\);
+     - \(\mtP\) is rank deficient (otherwise it would project into the whole
+       space and thus \(\mtP\) would have to be an identity matrix).
+       
+     The first one can be readily seen from (8).
+     Now let's show that the second property is fulfilled.
+  
+     \begin{equation}
+     \begin{aligned} \mtP^2 = & \frac{1}{9} \begin{bmatrix}5 & -2 & 4\\-2 & 8 & 2\\4 & 2 & 5\end{bmatrix} \frac{1}{9} \begin{bmatrix}5 & -2 & 4\\-2 & 8 & 2\\4 & 2 & 5\end{bmatrix} \\
+     = & \frac{1}{9 \cdot 9} \begin{bmatrix} 25+4+16 & -10-16+8 & 20-4+20 \\ -10-16+8 & 4+64+4 & -8+16+10 \\ 20-4+20 & -8+16+10 & 16+4+25 \end{bmatrix} \\
+     = & \frac{1}{9} \begin{bmatrix}5 & -2 & 4\\-2 & 8 & 2\\4 & 2 & 5\end{bmatrix} = \mtP\\
+     \end{aligned}
+     \end{equation}
+
+     In order to show that the last property holds, first multiply the second
+     column of \(\mtP\) by \(\frac{1}{2}\), add it with the first column and
+     then we get the third column. This shows that the third column is a linear
+     combination of the first two columns. Also, we can easily check that the
+     first two columns are not linearly dependent. Therefore, the rank of
+     \(\mtP\) is 2 and since the three properties are fulfilled then \(\mtP\)
+     is a projection matrix.
+
+  B. The dimension of \(\stS\) is equal to the rank of \(\mtP\), which is 2.
+  C. \(\stS^\perp\) has the remaining dimensions in $\mathbb{C}^3$. Therefore,
+     its dimension is equal to 1.
+  D. \(\mtP^\perp = \mtI_3 - \mtP = \begin{bmatrix}1 & 0 & 0\\0 & 1 & 0\\0 & 0 & 1\end{bmatrix} - \frac{1}{9}\begin{bmatrix}5 & -2 & 4\\-2 & 8 & 2\\4 & 2 & 5\end{bmatrix} = \begin{bmatrix}\frac{4}{9} & \frac{2}{9} & - \frac{4}{9}\\\frac{2}{9} & \frac{1}{9} & - \frac{2}{9}\\- \frac{4}{9} & - \frac{2}{9} & \frac{4}{9}\end{bmatrix}\)
+  E. We know that the dimension of \(\stS^\perp\) is equal to one. Therefore,
+     in order to get a basis for we only need to take one column of
+     \(\mtP^\perp\) and divide it by its norm (to make it an orthonormal
+     basis). Therefore, we have that
+     \[U^\perp = \frac{3}{2} \begin{bmatrix}\frac{4}{9}\\\frac{2}{9}\\- \frac{4}{9}\end{bmatrix} = \begin{bmatrix}\frac{2}{3}\\\frac{1}{3}\\- \frac{2}{3}\end{bmatrix}\]
+  F. \begin{equation} 
+     \begin{aligned} 
+     \mtP_2 & = \frac{1}{18} \begin{bmatrix}3 & -1\\0 & 4\\3 & 1\end{bmatrix} \begin{bmatrix}3 & 0 & 3\\-1 & 4 & 1\end{bmatrix} \\
+            & = \frac{1}{18} \begin{bmatrix}10 & -4 & 8\\-4 & 16 & 4\\8 & 4 & 10\end{bmatrix} \\
+            & = \frac{1}{9} \begin{bmatrix}5 & -2 & 4\\-2 & 8 & 2\\4 & 2 & 5\end{bmatrix} = \mtP
+     \end{aligned}
+     \end{equation}
+
+     Since \(\stS\) and \(\stS_2\) have the same projection matrix then they are the same subspace.
+* Exercise 4
+  
+  A. 
+     For some vector \(\vtX\) the squared norm of the error is given by
+     \begin{equation} \Vert \mtA \vtX - \vtB \Vert^2 = \Vert \mtU \mtSigma \mtV^H \vtX - \vtB \Vert^2 \end{equation}
+  
+     Since multiplying by a unitary matrix does not change the norm, let's left
+     multiply by \(\mtU^H\). We then get
+  
+     \begin{equation} 
+     \begin{aligned}
+     \Vert \mtA \vtX - \vtB \Vert^2 & = \Vert \mtSigma \mtV^H \vtX - \mtU^H \vtB \Vert^2 \\
+     & =\left \Vert \begin{bmatrix} \mtSigma_1 & \boldsymbol{0} \\ \boldsymbol{0} & \boldsymbol{0} \end{bmatrix} \begin{bmatrix} \mtV_1^H \\ \mtV_2^H \end{bmatrix} \vtX - \begin{bmatrix} \mtU_1^H \\ \mtU_2^H \end{bmatrix} \vtB\right\Vert^2
+     \end{aligned}
+     \end{equation}
+  
+     Now we can separate the top and bottom "rows" to get 
+  
+     \begin{equation} 
+     \begin{aligned}
+     \left\Vert \mtA \vtX - \vtB \right\Vert^2 & = \left\Vert \begin{bmatrix} \mtSigma_1 & 0\end{bmatrix} \begin{bmatrix} \mtV_1^H \\ \mtV_2^H\end{bmatrix} \vtX - \mtU_1^H \vtB\right\Vert^2 + \left\Vert -\mtU_2^H \vtB\right\Vert^2 \\
+     & = \Vert \mtSigma_1 \mtV_1^H \vtX - \mtU_1^H \vtB \Vert^2 + \Vert \mtU_2^H \vtB \Vert^2
+     \end{aligned}
+     \end{equation} 
+  
+     We can find a value for \(\vtX \) that makes the first term equal to
+     zero. In fact, the solution for that is \(\vtX = \mtA^+ \vtB\). However,
+     there is no way to make the second term become zero, since it does not
+     even depend on the value of \(\vtX\). Therefore, this solution is only an
+     approximated solution.
+
+     However, in the modified system where we have \(\widehat{\vtB} = \mtP \vtB\) the
+     second term becomes 
+     \(\Vert\underbrace{\mtU_2^H \mtU_1^H}_{\boldsymbol{0}}\mtU_1^H \vtB \Vert^2 = 0\).
+     Hence, \(\mtA^+\) is an exact solution to the modified system \(\mtA \vtX = \widehat{\vtB}\).
+
+  B. The error is given by
+     \[\vtB - \widehat{\vtB} = \vtB - \mtP \vtB = (\mtI - \mtP)\vtB = \mtP^\perp,\]
+     where \(\mtP^\perp\) is a projection matrix that projects into the
+     subspace orthogonal to the subspace projected by \(\mtP\).
+
+     Therefore, \(\vtB - \widehat{\vtB}\) and \(\widehat{\vtB} \) are orthogonal.
+
+     Another way to prove this is showing that the dot product of \(\vtB -
+     \widehat{\vtB}\) and \(\widehat{\vtB} \) is equal to zero. That is,
+     \begin{equation}
+     (\mtP\vtB)^H (\mtI - \vtP)\vtB = \vtB^H \mtP^H (\mtI -\mtP)\vtB = (\vtB^H \mtP^H - \vtB^H \mtP^H \mtP)\vtB
+     \end{equation}
+     Since \(\mtP\) is a projection matrix then \(\mtP^H = \mtP\) and \(\mtP\mtP = \mtP\). Therefore
+     \begin{equation} (\vtB^H \mtP^H - \vtB^H \mtP^H \mtP)\vtB = \cancel{(\vtB^H \mtP - \vtB^H \mtP)}\vtB = 0\end{equation}
+     Thus, \(\vtB - \widehat{\vtB}\) and \(\widehat{\vtB} \) are orthogonal.
