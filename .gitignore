@@ -1,0 +1,12 @@
+auto
+*.aux
+*.log
+*.synctex.gz
+*.out
+*~
+.ipynb_checkpoints
+__pycache__
+MathJax-master
+solutions.html
+solutions.pdf
+solutions.tex
