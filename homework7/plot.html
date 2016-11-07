@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
+        <!-- Add the D3 library-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.3.0/d3.js" charset="utf-8"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!-- Optional theme -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+
+        <script
+			src="https://code.jquery.com/jquery-3.1.1.min.js"
+			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </head>
+    <body>
+
+        <!-- <div class="container">
+             <div class="row">
+             <div > -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <svg></svg>
+                </div>
+            </div>
+
+            <div class="row">
+                <fieldset class="col-sm-4 col-md-3">
+                    <legend>Spectrum:</legend>
+                    <div class="radio"><label><input type="radio" name="spectrum_type" onchange="handle_radio_button_change();" value="mvdr" checked> MVDR</label></div>
+                    <div class="radio"><label><input type="radio" name="spectrum_type" onchange="handle_radio_button_change();" value="music">  MUSIC</label></div>
+                    <div class="radio"><label><input type="radio" name="spectrum_type" onchange="handle_radio_button_change();" value="fourrier"> Fourrier</label></div>
+                </fieldset>
+
+                <!-- <fieldset class="col-md-2">
+                     <legend>Separation</legend>
+                     <div class="radio"><label><input type="radio" name="separation" onchange="handle_radio_button_change();" value="2" checked> 2</label></div>
+                     <div class="radio"><label><input type="radio" name="separation" onchange="handle_radio_button_change();" value="1"> 1</label></div>
+                     <div class="radio"><label><input type="radio" name="separation" onchange="handle_radio_button_change();" value="0.5"> 0.5</label></div>
+                     <div class="radio"><label><input type="radio" name="separation" onchange="handle_radio_button_change();" value="0.1"> 0.1</label></div>
+                     </fieldset> -->
+
+                <fieldset class="col-sm-4 col-md-3">
+                    <legend>Separation (normalized)</legend>
+                    <div style="display:flex;"><input id="sep_slider" type="range" min="0.1" max="2" value="2" step="0.1" oninput="update_sep_output_value(value); handle_radio_button_change();" onchange="handle_radio_button_change();"><output for="sep_slider" id="sep_value">2</output></div>
+                </fieldset>
+                
+                <fieldset class="col-sm-4 col-md-3">
+                    <legend>SNR:</legend>
+                    <div class="radio"><label><input type="radio" name="snr" onchange="handle_radio_button_change();" value="20" checked> 20</label></div>
+                    <div class="radio"><label><input type="radio" name="snr" onchange="handle_radio_button_change();" value="10"> 10</label></div>
+                </fieldset>
+            </div>
+        </div>
+        <script src="plot.js"></script>
+
+        <script>
+         update_sep_output_value(document.getElementById("sep_slider").value);
+        </script>
+    </body>
+</html>

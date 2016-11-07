@@ -1,0 +1,34 @@
+# -*- after-save-hook: org-html-export-to-html; org-export-in-background: t; -*-
+#+TITLE:Bla bla bla
+#+AUTHOR:Darlan Cavalcante Moreira
+#+EMAIL:darcamo@gmail.com
+#+SETUPFILE: ~/.emacs.d/lisp/org-setup-file-template/setup.org
+#+options: num:nil
+#+property: header-args:python :exports results
+#+HTML_MATHJAX: path:MathJax-master/MathJax.js?config=default.js  align: left indent: 5em tagside: left font: Neo-Euler
+#+LATEX_HEADER: \usepackage{cancel}
+
+#+LATEX_HEADER: \renewcommand{\theenumi}{\alph{enumi}}
+#+HTML_HEAD: <style>ol {list-style-type: lower-latin;}</style>
+
+#+HTML: \(\require{cancel}\)
+
+
+
+* Exercise 1
+  The MVDR spectrum is given by
+  \[\stS_\text{MVDR}(\mu) = \frac{1}{\vtA^H(\mu) \mtR_{\vtX\vtX}^{-1} \vtA_{\mu}}\]
+  
+  
+  If the spatial frequencies of the impinging wavefronts are packed into a d ×
+  1 column vector mu, then the array output for N snapshots can be calculated
+  in MATLAB like
+
+  #+begin_src matlab :exports none
+  X = exp(i*([0:M-1]')*mu') * (sign(randn(d,N))+i*sign(randn(d,N))) / (sqrt(2)) + sqrt(d) * (randn(M,N)+i*randn(M,N)) / (sqrt(2)*10^(SNR/20));
+  #+end_src
+
+  Plot below
+
+  | [[file:exercicio1_mu1.png]] | [[file:exercicio1_mu2.png]] |
+  | [[file:exercicio1_mu3.png]] | [[file:exercicio1_mu4.png]] |

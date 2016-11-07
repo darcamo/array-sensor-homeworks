@@ -1,0 +1,23 @@
+.point {
+    fill: red;
+}
+
+.scatter-plot{
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+/* Classes para os eixos X e Y */
+.axis {
+    /* stroke-width: 3px; */
+}
+.axis--x path {
+    /* display: none; */
+}
+.axis--y path {
+    /* display: none; */
+}
