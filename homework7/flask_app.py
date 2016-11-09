@@ -7,9 +7,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    html = open("plot.html").read()
-    return html
+    #html = open("plot.html").read()
+    return render_template("main.html")
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
