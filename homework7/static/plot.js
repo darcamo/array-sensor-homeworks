@@ -7,6 +7,9 @@ var yAxis = null;
 var mu_b = 2*Math.PI / 12.0;
 var transition_duration = 250;
 
+var plotdata;
+// Request data once at the beginning
+d3.json("static/plotdata.json", function(d) {plotdata = d;});
 
 // type deve ser "mvdr", "music" ou "fourrier"
 function updateChart(type, data) {
@@ -105,33 +108,33 @@ function get_radio_button_value(radio_name) {
 }
 
 
-function get_data_filename() {
-    var seps = ["2", "1", "0.5", "0.1"];
-    var snr_value = get_radio_button_value("snr");
-    //var spectrum_type = get_radio_button_value("spectrum_type");
-    //var separation = get_radio_button_value("separation");
+function get_separation_value() {
     var separation = parseFloat(document.getElementById("sep_slider").value).toFixed(1);
-
-    var json_file = "static/jsondata/data_snr_{snr}_sep_{sep}.json"
-        .replace("{snr}", snr_value)
-    //.replace("{sep}", seps.indexOf(separation));
-    .replace("{sep}", separation);
-    return json_file;
+    return separation;
 }
 
+
+function get_data() {
+    var sep = get_separation_value();
+    var snr = get_radio_button_value("snr");
+
+    var data = plotdata.filter(function (d) {
+        return (d.snr == snr) && (Math.abs(d.sep - sep) < 1e-3);
+    });
+    return data;
+}
 
 function handle_radio_button_change() {
-    var updateChartBounded = updateChart.bind(null, get_radio_button_value("spectrum_type"));
-    var json_file = get_data_filename();
-
-    d3.json(json_file, updateChartBounded);
+    var type = get_radio_button_value("spectrum_type");
+    updateChart(type, get_data());
 }
 
 
+// oninput callback set in plot.html
 function update_sep_output_value(value) {
 	document.querySelector('#sep_value').value = parseFloat(value).toFixed(1);
 }
 
 
-// Gera plot de acordo com os valores nos radio buttons
-handle_radio_button_change();
+// // Gera plot de acordo com os valores nos radio buttons
+// handle_radio_button_change();

@@ -112,23 +112,11 @@ def save_results_to_json_file(steering_angles, mvdr_spectrum, music_spectrum, fo
     json.dump(data, fp)
 
 
-# if __name__ == '__main__':
-#     SNR = [10, 20]
-#     sep = [2, 1, 0.5, 0.1]
-
-#     for snr, s in product(SNR, sep):
-#         steering_angles, mvdr_spectrum, music_spectrum, fourrier_spectrum = main(SNR=snr, sep=s)
-#         plot_spectrum(steering_angles, mvdr_spectrum, 'mvdr_snr_{0}_sep_{1}.png'.format(snr, sep.index(s)))
-#         plot_spectrum(steering_angles, music_spectrum, 'music_snr_{0}_sep_{1}.png'.format(snr, sep.index(s)))
-#         plot_spectrum(steering_angles, fourrier_spectrum, 'fourrier_snr_{0}_sep_{1}.png'.format(snr, sep.index(s)))
-
-#         json_filename = "jsondata/data_snr_{0}_sep_{1}.json".format(snr, sep.index(s))
-#         save_results_to_json_file(steering_angles, mvdr_spectrum, music_spectrum, fourrier_spectrum, json_filename)
-
-
-if __name__ == '__main__':
+def simulate():
     SNR = [0, 10, 20]
     sep = np.arange(0, 2.05, 0.1)
+
+    data = []
 
     for snr, s in product(SNR, sep):
         steering_angles, mvdr_spectrum, music_spectrum, fourrier_spectrum = main(SNR=snr, sep=s)
@@ -136,5 +124,18 @@ if __name__ == '__main__':
         # plot_spectrum(steering_angles, music_spectrum, 'music_snr_{0}_sep_{1}.png'.format(snr, s))
         # plot_spectrum(steering_angles, fourrier_spectrum, 'fourrier_snr_{0}_sep_{1}.png'.format(snr, s))
 
-        json_filename = "jsondata/data_snr_{0}_sep_{1}.json".format(snr, np.round(s,3))
-        save_results_to_json_file(steering_angles, mvdr_spectrum, music_spectrum, fourrier_spectrum, json_filename)
+        data.extend(
+            [{"angle": i, "mvdr": j, "music": l, "fourrier": m, "snr": snr, "sep": s}
+             for i, j, l, m in zip(steering_angles, mvdr_spectrum,
+                                   music_spectrum, fourrier_spectrum)])
+
+    return data
+
+
+if __name__ == '__main__':
+    data = simulate()
+
+    # Save data to a json file
+    json_filename = "static/plotdata.json"
+    fp = open(json_filename, 'w')
+    json.dump(data, fp)
