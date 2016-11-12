@@ -9,7 +9,11 @@ var transition_duration = 250;
 
 var plotdata;
 // Request data once at the beginning
-d3.json("static/plotdata.json", function(d) {plotdata = d;});
+d3.json("static/plotdata.json", function(d) {
+    plotdata = d;
+    // // Gera plot de acordo com os valores nos radio buttons
+    handle_radio_button_change();
+});
 
 // type deve ser "mvdr", "music" ou "fourrier"
 function updateChart(type, data) {
@@ -134,7 +138,3 @@ function handle_radio_button_change() {
 function update_sep_output_value(value) {
 	document.querySelector('#sep_value').value = parseFloat(value).toFixed(1);
 }
-
-
-// // Gera plot de acordo com os valores nos radio buttons
-// handle_radio_button_change();
