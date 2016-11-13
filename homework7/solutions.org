@@ -1,34 +1,91 @@
-# -*- after-save-hook: org-html-export-to-html; org-export-in-background: t; -*-
-#+TITLE:Bla bla bla
+# -*- after-save-hook: org-latex-export-to-pdf; org-export-in-background: t; -*-
+#+TITLE:Solutions to Homework 3
 #+AUTHOR:Darlan Cavalcante Moreira
 #+EMAIL:darcamo@gmail.com
 #+SETUPFILE: ~/.emacs.d/lisp/org-setup-file-template/setup.org
 #+options: num:nil
 #+property: header-args:python :exports results
 #+HTML_MATHJAX: path:MathJax-master/MathJax.js?config=default.js  align: left indent: 5em tagside: left font: Neo-Euler
-#+LATEX_HEADER: \usepackage{cancel}
 
 #+LATEX_HEADER: \renewcommand{\theenumi}{\alph{enumi}}
 #+HTML_HEAD: <style>ol {list-style-type: lower-latin;}</style>
 
-#+HTML: \(\require{cancel}\)
-
-
 
 * Exercise 1
-  The MVDR spectrum is given by
-  \[\stS_\text{MVDR}(\mu) = \frac{1}{\vtA^H(\mu) \mtR_{\vtX\vtX}^{-1} \vtA_{\mu}}\]
-  
-  
-  If the spatial frequencies of the impinging wavefronts are packed into a d ×
-  1 column vector mu, then the array output for N snapshots can be calculated
-  in MATLAB like
+  In this exercise we will plot the power spectra for the MVDR, MUSIC and
+  Fourier algorithms in a scenario with three different wavefronts. The plots will
+  consider several different wavefronts separations as well as SNR values.
+
+  The power spectra of the MVDR, MUSIC and Fourier algorithms are calculated as
+  bellow:
+
+  - MVDR:
+    \[\stS_\text{MVDR}(\mu) = \frac{1}{\vtA^H(\mu) \mtR_{\vtX\vtX}^{-1} \vtA(\mu)}\]
+  - MUSIC
+    \[\stS_\text{MVDR}(\mu) = \frac{\vtA^H(\mu) \vtA_{\mu}}{\vtA^H(\mu) \mtU_0 \mtU_0^H \vtA_{\mu}}\]
+  - Fourier
+    \[\frac{1}{N\cdot M^2}\sum_{n=1}^N \left \vert \sum_{k=0}^{M-1} x_{k+1}(t_n)e^{-j\mu k} \right \vert^2\]
+
+  # If the spatial frequencies of the impinging wavefronts are packed into a d ×
+  # 1 column vector mu, then the array output for N snapshots can be calculated
+  # in MATLAB like
 
   #+begin_src matlab :exports none
   X = exp(i*([0:M-1]')*mu') * (sign(randn(d,N))+i*sign(randn(d,N))) / (sqrt(2)) + sqrt(d) * (randn(M,N)+i*randn(M,N)) / (sqrt(2)*10^(SNR/20));
   #+end_src
 
-  Plot below
+  [[fig:mvdr][Figure 1]] illustrates the power spectra of MVDR for the three
+  wavefronts with separations equal to \(2\mu_B\), \(\mu_B\), \(0.5\mu_B\) and
+  \(0.1\mu_B\) for SNR values of 20dB and 10dB.
+  #+CAPTION: MVDR Power Spectra
+  #+ATTR_HTML: :width 75%
+  #+ATTR_LATEX: :width 1\textwidth
+  #+NAME: fig:mvdr
+  [[./mvdr.png]]
+  From the plot we can see that the MVDR algorithm is able to clearly
+  distinguish the three wavefronts when their spatial frequency is at least
+  \(\mu_b\), where \(\mu_b\) is the standard beamwidth. When the separation is
+  lower, such as with \(0.5\mu_B\), we can still perceive three wavefronts, but
+  they now are close enough such that they interfere with each other. If we
+  reduce the separation even more to \(0.1\mu_B\) we cannot distinguish the
+  wavefronts anymore and they appear to be only one wavefront.
 
-  | [[file:exercicio1_mu1.png]] | [[file:exercicio1_mu2.png]] |
-  | [[file:exercicio1_mu3.png]] | [[file:exercicio1_mu4.png]] |
+  Another interesting observation is the impact of the SNR. As the SNR
+  decreases the beam shape "spreads" such that a larger separation is required in
+  order to distinguish different wavefronts. For instance, with a separation of
+  \(0.5\mu_B\) the three wavefronts are close, but we can still notice that we
+  have three wavefronts for an SNR of 20dB. On the other hand, for an SNR of
+  10dB it appears to have only two wavefronts.
+
+ 
+  #+CAPTION: MUSIC Power Spectra
+  #+ATTR_HTML: :width 75%
+  #+ATTR_LATEX: :width 1\textwidth
+  #+NAME: fig:music
+  [[./music.png]]
+
+  [[fig:music][Figure 2]] illustrates similar results for the MUSIC algorithm. As we can see
+  in the figure, for the SNR value of 20dB the MUSIC algorithm seems to be able
+  to distinguish the different wavefronts better than MVDR. That is, the beam
+  shapes correspond to each wavefront are relatively smaller with the MUSIC
+  algorithm than with the MVDR algorithm. Thus, is able to distinguish
+  different wavefronts for lower separations than MVDR can. However, the impact
+  of reducing the SNR to 10dB is larger for MUSIC and it is worse (larger beam
+  shapes) than MVDR for lower SNR values.
+
+  
+  #+CAPTION: Fourier Power Spectra
+  #+ATTR_HTML: :width 75%
+  #+ATTR_LATEX: :width 1\textwidth
+  #+NAME: fig:fourier
+  [[./fourier.png]]
+
+  At last, [[fig:fourier][Figure 3]] illustrates the power spectra for the Fourier-based
+  algorithm. We can see that the Fourier-based algorithm is less sensitive to
+  SNR changes, but the wavefronts have a much larger beam shape and thus the
+  algorithm is less robust to smaller separations than the previous two
+  algorithms.
+
+  Note: For a more interactive plot of the same data used in these plots
+  see http://darcamo.pythonanywhere.com/. There you can change the wavefront
+  separation and the SNR value and visualize how the spectra changes.

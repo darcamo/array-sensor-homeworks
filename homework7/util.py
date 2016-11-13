@@ -26,13 +26,13 @@ def calc_mvdr_spectrum(steering_angles, Rxx):
 
 
 def calc_fourier_spectrum(steering_angles, Rxx):
-    fourrier_spectrum = np.empty_like(steering_angles)
+    fourier_spectrum = np.empty_like(steering_angles)
     M = Rxx.shape[0]
     for i, mu in enumerate(steering_angles):
         a = calc_a_phi_vect(M, mu)
         a_H = a.T.conj()
-        fourrier_spectrum[i] = np.linalg.norm(a_H @ Rxx @ a)
-    return fourrier_spectrum
+        fourier_spectrum[i] = np.linalg.norm(a_H @ Rxx @ a)
+    return fourier_spectrum
 
 def calc_music_spectrum(steering_angles, U0):
     music_spectrum = np.empty_like(steering_angles)
@@ -99,17 +99,10 @@ def main(M=12, N=100, SNR=10, sep=2):
     mvdr_spectrum = calc_mvdr_spectrum(steering_angles, Rxx)
     # MUSIC Spectrumz
     music_spectrum = calc_music_spectrum(steering_angles, U0)
-    # Fourrier Spectrum
-    fourrier_spectrum = calc_fourier_spectrum(steering_angles, Rxx)
+    # Fourier Spectrum
+    fourier_spectrum = calc_fourier_spectrum(steering_angles, Rxx)
 
-    return steering_angles, mvdr_spectrum, music_spectrum, fourrier_spectrum
-
-
-def save_results_to_json_file(steering_angles, mvdr_spectrum, music_spectrum, fourrier_spectrum, filename):
-    data = [{"angle": i, "mvdr": j, "music": l, "fourrier": m}
-            for i, j, l, m in zip(steering_angles, mvdr_spectrum, music_spectrum, fourrier_spectrum)]
-    fp = open(filename, 'w')
-    json.dump(data, fp)
+    return steering_angles, mvdr_spectrum, music_spectrum, fourier_spectrum
 
 
 def simulate():
@@ -119,23 +112,37 @@ def simulate():
     data = []
 
     for snr, s in product(SNR, sep):
-        steering_angles, mvdr_spectrum, music_spectrum, fourrier_spectrum = main(SNR=snr, sep=s)
+        steering_angles, mvdr_spectrum, music_spectrum, fourier_spectrum = main(SNR=snr, sep=s)
         # plot_spectrum(steering_angles, mvdr_spectrum, 'mvdr_snr_{0}_sep_{1}.png'.format(snr, s))
         # plot_spectrum(steering_angles, music_spectrum, 'music_snr_{0}_sep_{1}.png'.format(snr, s))
-        # plot_spectrum(steering_angles, fourrier_spectrum, 'fourrier_snr_{0}_sep_{1}.png'.format(snr, s))
+        # plot_spectrum(steering_angles, fourier_spectrum, 'fourier_snr_{0}_sep_{1}.png'.format(snr, s))
 
         data.extend(
-            [{"angle": i, "mvdr": j, "music": l, "fourrier": m, "snr": snr, "sep": s}
+            [{"angle": i, "mvdr": j, "music": l, "fourier": m, "snr": snr, "sep": s}
              for i, j, l, m in zip(steering_angles, mvdr_spectrum,
-                                   music_spectrum, fourrier_spectrum)])
+                                   music_spectrum, fourier_spectrum)])
 
     return data
 
 
 if __name__ == '__main__':
+    # # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    # # xxxxxxxxxxxxxxx Simulate and save data xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    # # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     data = simulate()
 
     # Save data to a json file
     json_filename = "static/plotdata.json"
     fp = open(json_filename, 'w')
     json.dump(data, fp)
+
+
+    # # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    # # xxxxxxxxxxxxxxx Plot data xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    # # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    # json_filename = "static/plotdata.json"
+    # data = json.load(open(json_filename))
+
+    # fig, ax = plt.subplots()
+
+    # ax.plot(steering_angles, spectrum)[0]

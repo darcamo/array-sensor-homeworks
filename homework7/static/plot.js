@@ -15,7 +15,7 @@ d3.json("static/plotdata.json", function(d) {
     handle_radio_button_change();
 });
 
-// type deve ser "mvdr", "music" ou "fourrier"
+// type deve ser "mvdr", "music" ou "fourier"
 function updateChart(type, data) {
     var svg = d3.select("svg")
         .attr("width", svg_width)
