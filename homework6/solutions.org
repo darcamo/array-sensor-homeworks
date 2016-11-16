@@ -1,0 +1,23 @@
+# -*- after-save-hook: org-latex-export-to-pdf; org-export-in-background: t; -*-
+#+TITLE:Solutions to Homework 4
+#+AUTHOR:Darlan Cavalcante Moreira
+#+EMAIL:darcamo@gmail.com
+#+SETUPFILE: ~/.emacs.d/lisp/org-setup-file-template/setup.org
+#+options: num:nil
+#+property: header-args:python :exports results
+#+HTML_MATHJAX: path:MathJax-master/MathJax.js?config=default.js  align: left indent: 5em tagside: left font: Neo-Euler
+
+#+LATEX_HEADER: \renewcommand{\theenumi}{\alph{enumi}}
+#+HTML_HEAD: <style>ol {list-style-type: lower-latin;}</style>
+
+
+* Exercise 1
+  a. 
+  b. 
+  c. 
+  d. 
+  e. 
+  f. 
+* Exercise 2
+  a. 
+  b. 
