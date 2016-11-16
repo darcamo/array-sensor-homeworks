@@ -89,7 +89,7 @@ def plot_spectrum(steering_angles, spectrum, filename=None):
         plt.show()
 
 
-def main(M=12, N=100, SNR=10, sep=2):
+def main(M, N, SNR, sep):
     Rxx, U0 = simulate_and_compute_Rxx_U0(M, N, SNR, sep)
 
     mu_b = 2.*np.pi/M
@@ -102,7 +102,7 @@ def main(M=12, N=100, SNR=10, sep=2):
     # Fourier Spectrum
     fourier_spectrum = calc_fourier_spectrum(steering_angles, Rxx)
 
-    return steering_angles, mvdr_spectrum, music_spectrum, fourier_spectrum
+    return steering_angles/mu_b, mvdr_spectrum, music_spectrum, fourier_spectrum
 
 
 def simulate():
@@ -112,7 +112,7 @@ def simulate():
     data = []
 
     for snr, s in product(SNR, sep):
-        steering_angles, mvdr_spectrum, music_spectrum, fourier_spectrum = main(SNR=snr, sep=s)
+        steering_angles, mvdr_spectrum, music_spectrum, fourier_spectrum = main(M=12, N=100, SNR=snr, sep=s)
         # plot_spectrum(steering_angles, mvdr_spectrum, 'mvdr_snr_{0}_sep_{1}.png'.format(snr, s))
         # plot_spectrum(steering_angles, music_spectrum, 'music_snr_{0}_sep_{1}.png'.format(snr, s))
         # plot_spectrum(steering_angles, fourier_spectrum, 'fourier_snr_{0}_sep_{1}.png'.format(snr, s))
