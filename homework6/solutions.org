@@ -13,8 +13,98 @@
 
 * Exercise 1
   a. 
+     \begin{equation*}
+     \vtU[n] = \begin{bmatrix} u[n] \\ u[n-1] \\ u[n-2] \\ \vdots \\ u[n-M+1] \\ \end{bmatrix}  \quad \quad \vtW = \begin{bmatrix} w[0] \\ w[1] \\ w[2] \\ \vdots \\ w[M-1]\end{bmatrix}\end{equation*}
+     
+     \begin{equation*}
+     \begin{aligned}y[n] & = \sum_{m=0}^{M-1} w^*[m] \cdot u[n-m] \\ & = \vtW^H \vtU[n]\end{aligned}
+     \end{equation*}
   b. 
+     \begin{equation*}
+     \begin{aligned}
+     \text{LMMSE:\quad}  & \min \; \E\{\Vert y[n]-d[n]\Vert^2\} \\
+     & \min \; \E\{\Vert \vtW^H \vtU[n] - d[n] \Vert^2\}
+     \end{aligned}
+     \end{equation*}
+
+     The expectation can be computed as 
+     \begin{equation*}
+     \begin{aligned}
+     \E\{y-d\} & = \E\{(\vtW^H \vtU[n] - d[n]) (\vtW^H \vtU[n] - d[n] )^H\} \\
+     & = \E\{\vtW^H \vtU[n]\vtU^H[n] \vtW - \vtW^H\vtU[n]d^*[n] - \underbrace{\vtU^H[n]\vtW d[n]}_{\vtW^T\vtU^*[n]d[n]} + d^2[n]\} \\
+     & = \vtW\mtR_u\vtW - \vtW^H\vtP - \vtW^T \vtP^* + \mtR_d
+     \end{aligned}
+     \end{equation*}
+     where $\vtP = \E\{\vtU[n]d^*[n]\}$, $\mtR_u = \E\{\vtU[n] \vtU^H[n]\}$ and $\mtR_d$ is an identity matrix.
+
+     In order to find the optimum $\vtW$ we derivate this with respect to
+     $\vtW^*$ resulting in
+     
+     \begin{equation*}
+     \begin{aligned}
+     \vtR_u\vtW - \vtP = 0 \\
+     \boxed{\vtW = \mtR^{-1}\vtP}
+     \end{aligned}
+     \end{equation*}
   c. 
+     \begin{equation*}
+     \begin{aligned}
+     r[m] & = \E\{u[n]u^*[n-m]\} \\ u[n] &= \vtH^T \vtX[n] \\ \text{with} & \quad \vtH = \begin{bmatrix} h[0]\\h[1]\\\vdots\\ h[L_h-1]\end{bmatrix} \quad \text{and} \quad \vtX[n] = \begin{bmatrix} x[n]\\x[n-1]\\\vdots \\x[n-L_h+1]\end{bmatrix}
+     \end{aligned}
+     \end{equation*}
+
+     The covariance matrix $\mtR$ has the form below
+
+     $$ \begin{bmatrix} r[0] & r[1] & \cdots & r[M-2] & r[M-1] \\ r[-1] & r[0] & r[1] & \cdots \\ r[-2] & r[-1] & r[0] & \cdots \\ \vdots & \vdots & & \ddots & \vdots \\ r[-M+1] & r[-M+2] & \cdots & &r[0]\end{bmatrix} $$
+
+     Each element in this matrix follows the form
+
+     \begin{equation*}
+     \begin{aligned}
+     r[m] & = \E\{u[n]u^*[n-m]\} = \E\{(\vtH^T\vtX[n])(\vtX[n-m])^H\} \\
+     & = \vtH^T \underbrace{\E\{\vtX[n]\vtX^H[n-m]\}}_{\mtX[m]}\vtH^*
+     \end{aligned}
+     \end{equation*}
+
+     $\mtX[m]$ is a matrix with dimension $L_h \times L_h$. Considering that
+     $\E\{x[n]x^*[n-k]\}$ is equal to 1 for $k=0$ and $0$ otherwise, let's compute
+     the value of $\mtX[m]$ for some values of $m$.  for $\mtX[m]$ for some value
+     of $m$.
+
+     \begin{equation*}
+     \mtX[0] = \begin{bmatrix} 1 & 0 & \cdots & 0 \\ 0 & 1 \\ \vdots & & \ddots \\ 0 & 0 & \cdots & 1\end{bmatrix} \quad \rightarrow \quad \text{Identity Matrix}
+     \end{equation*}
+
+     \begin{equation*}
+     \mtX[1] = \begin{bmatrix} 0 & 0 & 0 & \cdots \\ 1 & 0 & 0 \\ 0 & 1 & 0 \\ \vdots & & \ddots \\ 0 & 0 & \cdots & 1\end{bmatrix} \quad \rightarrow \quad \text{Diagonal of ones shifted below}
+     \end{equation*}
+
+     All $\mtX[m]$ matrices correspond to an identity matrix with its diagonal shifted below by $m$.
+
+     Applying this back to $r[m]$ we get
+     \begin{equation*}
+     \begin{aligned}
+     r[0] = \vtH^T \vtH = \sum_{k=0}^{L_h-1}h[k]h^*[k] = \Vert \vtH\Vert^2\\
+     r[1] = \sum_{k=0}^{L_h-1}h[k]h^*[k-1] \\
+     r[2] = \sum_{k=0}^{L_h-1}h[k]h^*[k-2] \\
+     \vdots \\
+     \end{aligned}
+     \end{equation*}
+
+     Therefore, the general formula for $r[m]$ is given by
+
+     \begin{equation*}
+     \boxed{r[m] = \sum_{k=0}^{L_h-1}h[k]h^*[k-m]}
+     \end{equation*}
+  
+     For the value of $\vtP$ we have that
+
+     \begin{equation*}
+     \vtP = \E\{\vtH^T \vtX[n] x[n-M+1]\} = \vtH^T\E\{\vtX[n]x[n-M+1]\}
+     \end{equation*}
+
+     \textcolor{red}{CONTINUAR}
+     
   d. 
   e. 
   f. 
