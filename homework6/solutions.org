@@ -39,7 +39,7 @@
      \end{equation*}
      where $\vtP = \E\{\vtU[n]d^*[n]\}$, $\mtR_u = \E\{\vtU[n] \vtU^H[n]\}$ and $\mtR_d$ is an identity matrix.
 
-     In order to find the optimum $\vtW$ we derivate this with respect to
+     In order to find the optimum $\vtW$ we take the derivative this with respect to
      $\vtW^*$ resulting in
      
      \begin{equation*}
@@ -115,7 +115,7 @@
      $$\vtP = \begin{bmatrix} h[M-1] \\ h[M-2] \\ \vdots \\ h[0]\end{bmatrix}$$
 
   d. 
-     The Winer solution is given by $\vtW = \mtR^{-1}\vtP$ where 
+     The Wiener solution is given by $\vtW = \mtR^{-1}\vtP$ where 
      \(\vtH = \begin{bmatrix} a & b \end{bmatrix}^T\), 
      \(\vtP = \begin{bmatrix} b & a \end{bmatrix}\) and
      \begin{equation*}
@@ -131,11 +131,11 @@
      \end{bmatrix}
      \end{equation*}
 
-     In order to compite the inverse of $\mtR$ let's first compute its
+     In order to compute the inverse of $\mtR$ let's first compute its
      determinant, which is given by $\det(\mtR) = \vert a \vert^4 + \vert b
      \vert^4 + \vert ab \vert^2$.
 
-     Therefore, the inverse ot $\mtR$ is given by
+     Therefore, the inverse of $\mtR$ is given by
 
      \begin{equation*}
      \mtR^{-1} = \begin{bmatrix}
@@ -143,7 +143,7 @@
      \end{bmatrix}
      \end{equation*}
      
-     Therefore, the Winer solution is given by
+     Therefore, the Wiener solution is given by
      
      \begin{equation*}
      \begin{aligned}
@@ -164,15 +164,15 @@
      \mtR = \begin{bmatrix}41 & -20 & 0 & 0 & 0 & 0\\-20 & 41 & -20 & 0 & 0 & 0\\0 & -20 & 41 & -20 & 0 & 0\\0 & 0 & -20 & 41 & -20 & 0\\0 & 0 & 0 & -20 & 41 & -20\\0 & 0 & 0 & 0 & -20 & 41\end{bmatrix}
      \end{equation}
 
-     with the winer solution given by
+     with the wiener solution given by
 
      \begin{equation*}
      \vtW = \left[\begin{matrix}-0.0308479052192436\\-0.0632382056994494\\-0.0987904164646277\\-0.139282148053037\\-0.186737987044099\\0.00646927461263472\end{matrix}\right]
      \end{equation*}
 
      Using this filter and simulating for 50000 random samples of a zero mean
-     circularly complex gaussian distribution with unitary variance resulted in
-     a resudual mean square error of 0.040465415688231844.
+     circularly complex Gaussian distribution with unitary variance resulted in
+     a residual mean square error of 0.040465415688231844.
 
   f. 
      The plot of the MSE is shown below. 
@@ -189,5 +189,5 @@
 
      
 * Exercise 2
-  a. 
-  b. 
+  a. To be done
+  b. To be done
