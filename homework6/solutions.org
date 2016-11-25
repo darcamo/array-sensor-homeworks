@@ -8,7 +8,9 @@
 #+HTML_MATHJAX: path:MathJax-master/MathJax.js?config=default.js  align: left indent: 5em tagside: left font: Neo-Euler
 
 #+LATEX_HEADER: \renewcommand{\theenumi}{\alph{enumi}}
+#+LATEX_HEADER: \usepackage[paper=a4paper]{geometry}
 #+HTML_HEAD: <style>ol {list-style-type: lower-latin;}</style>
+#+LATEX: \newcommand\detR{\vert a\vert^4+\vert b\vert^4+\vert a\vert^2 \vert b\vert^2}
 
 
 * Exercise 1
@@ -100,14 +102,92 @@
      For the value of $\vtP$ we have that
 
      \begin{equation*}
-     \vtP = \E\{\vtH^T \vtX[n] x[n-M+1]\} = \vtH^T\E\{\vtX[n]x[n-M+1]\}
+     \begin{aligned}
+     \vtP & = \E\{\vtU[n] x^*[n-M+1]\} = \begin{bmatrix} \E\{u[n] x^*[n-M+1]\} \\ \E\{u[n-1] x^*[n-M+1]\} \\ \vdots \\ \E\{u[n-M+1] x^*[n-M+1]\}\end{bmatrix} \\
+     & = \begin{bmatrix} \displaystyle \E \left\{ \left(\sum_{k=0}^{L_h-1}h[k]x[n-k] \right)   x^*[n-M+1]   \right\} \\ \displaystyle \E \left\{ \left(\sum_{k=0}^{L_h-1}h[k]x[n-k-1] \right)   x^*[n-M+1]   \right\} \\ \vdots \\ \displaystyle \E \left\{ \left(\sum_{k=0}^{L_h-1}h[k]x[n-k-M+1] \right)   x^*[n-M+1]   \right\}\end{bmatrix} \\
+     & = \begin{bmatrix} \displaystyle \sum_{k=0}^{L_h-1} \E\left\{h[k]x[n-k] x^*[n-M+1] \right\} \\ \displaystyle \sum_{k=0}^{L_h-1} \E\left\{h[k]x[n-k-1] x^*[n-M+1] \right\} \\ \vdots \\ \displaystyle \sum_{k=0}^{L_h-1} \E\left\{h[k]x[n-k-M+1] x^*[n-M+1] \right\}\end{bmatrix}
+     \end{aligned}
      \end{equation*}
 
-     \textcolor{red}{CONTINUAR}
-     
+     Due to the expectation only one term in each summation will be equal to 1
+     times the corresponding channel tap and all other terms will be equal to
+     zero. We have then that
+     $$\vtP = \begin{bmatrix} h[M-1] \\ h[M-2] \\ \vdots \\ h[0]\end{bmatrix}$$
+
   d. 
+     The Winer solution is given by $\vtW = \mtR^{-1}\vtP$ where 
+     \(\vtH = \begin{bmatrix} a & b \end{bmatrix}^T\), 
+     \(\vtP = \begin{bmatrix} b & a \end{bmatrix}\) and
+     \begin{equation*}
+     \mtR = \begin{bmatrix}
+     r[0] & r[1] \\
+     r[-1] & r[0]
+     \end{bmatrix} = 
+     \begin{bmatrix} 
+     aa^*+bb^* & ba^* \\ ab^* & aa^*+bb^*
+     \end{bmatrix} = 
+     \begin{bmatrix}
+     a^2+b^2 & ba^* \\ ab^* & a^2+b^2
+     \end{bmatrix}
+     \end{equation*}
+
+     In order to compite the inverse of $\mtR$ let's first compute its
+     determinant, which is given by $\det(\mtR) = \vert a \vert^4 + \vert b
+     \vert^4 + \vert ab \vert^2$.
+
+     Therefore, the inverse ot $\mtR$ is given by
+
+     \begin{equation*}
+     \mtR^{-1} = \begin{bmatrix}
+     \frac{\vert a\vert^2+\vert b\vert^2}{\detR} & \frac{-ba^*}{\detR} \\ \frac{-ab^*}{\detR} & \frac{\vert a\vert^2+\vert b\vert^2}{\detR}
+     \end{bmatrix}
+     \end{equation*}
+     
+     Therefore, the Winer solution is given by
+     
+     \begin{equation*}
+     \begin{aligned}
+     \vtW & = \mtR^{-1}\vtP = \begin{bmatrix} \frac{\vert a\vert^2+\vert b\vert^2}{\detR} & \frac{-ba^*}{\detR} \\ \frac{-ab^*}{\detR} & \frac{\vert a\vert^2+\vert b\vert^2}{\detR} \end{bmatrix} \begin{bmatrix} b\\a \end{bmatrix} \\
+     \vtW & = \frac{1}{\detR} \begin{bmatrix} (\vert a\vert^2+\vert b\vert^2)b - b\vert a \vert^2 \\ -a\vert b \vert^2 + (\vert a\vert^2+\vert b\vert^2)a\end{bmatrix} \\
+     \vtW & = \frac{1}{\detR} \begin{bmatrix} \vert b \vert^2 b \\ \vert a \vert^2 a \end{bmatrix}
+     \end{aligned}
+     \end{equation*}
+
+     If we set $b=0$ then $M=1$ and we have that \(w = \frac{a}{\vert a \vert^2}\) and the error is given by
+     \[e[n] = d[n] - y[n] = x[n - 1 + 1] - \frac{a^*}{\vert a \vert^2} (a x[n]) = 0.\]
+
   e. 
+     Now we have that \(\vtH = \begin{bmatrix} 4 & -5\end{bmatrix}^T\) and
+     since \(M = 6\) the covariance matrix is a \(6 \times 6\) matrix given by
+
+     \begin{equation}
+     \mtR = \begin{bmatrix}41 & -20 & 0 & 0 & 0 & 0\\-20 & 41 & -20 & 0 & 0 & 0\\0 & -20 & 41 & -20 & 0 & 0\\0 & 0 & -20 & 41 & -20 & 0\\0 & 0 & 0 & -20 & 41 & -20\\0 & 0 & 0 & 0 & -20 & 41\end{bmatrix}
+     \end{equation}
+
+     with the winer solution given by
+
+     \begin{equation*}
+     \vtW = \left[\begin{matrix}-0.0308479052192436\\-0.0632382056994494\\-0.0987904164646277\\-0.139282148053037\\-0.186737987044099\\0.00646927461263472\end{matrix}\right]
+     \end{equation*}
+
+     Using this filter and simulating for 50000 random samples of a zero mean
+     circularly complex gaussian distribution with unitary variance resulted in
+     a resudual mean square error of 0.040465415688231844.
+
   f. 
+     The plot of the MSE is shown below. 
+
+     [[./mse_for_varying_M.png]]
+
+     It is possible to see a "linear" decreasing
+     (considering the logarithmic scale for the y axis). Different from the
+     last item, where 50000 data points were simulated (more than enough), in
+     this item I have increased the number of data points to 10000000 to
+     improve the averaging of the MSE. Even that number is not enough for the
+     higher values of M, which explains the "jumping around" of the plot in the
+     higher values of M.
+
+     
 * Exercise 2
   a. 
   b. 
