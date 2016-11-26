@@ -70,9 +70,7 @@
 
      $\mtX[m]$ is a matrix with dimension $L_h \times L_h$. Considering that
      $\E\{x[n]x^*[n-k]\}$ is equal to 1 for $k=0$ and $0$ otherwise, let's compute
-     the value of $\mtX[m]$ for some values of $m$.  for $\mtX[m]$ for some value
-     of $m$.
-
+     the value of $\mtX[m]$ for some values of $m$.
      \begin{equation*}
      \mtX[0] = \begin{bmatrix} 1 & 0 & \cdots & 0 \\ 0 & 1 \\ \vdots & & \ddots \\ 0 & 0 & \cdots & 1\end{bmatrix} \quad \rightarrow \quad \text{Identity Matrix}
      \end{equation*}
@@ -81,22 +79,23 @@
      \mtX[1] = \begin{bmatrix} 0 & 0 & 0 & \cdots \\ 1 & 0 & 0 \\ 0 & 1 & 0 \\ \vdots & & \ddots \\ 0 & 0 & \cdots & 1\end{bmatrix} \quad \rightarrow \quad \text{Diagonal of ones shifted below}
      \end{equation*}
 
-     All $\mtX[m]$ matrices correspond to an identity matrix with its diagonal shifted below by $m$.
+     All $\mtX[m]$ matrices correspond to an identity matrix with its diagonal
+     shifted below by $m$ (shifted above if $m$ is negative).
 
-     Applying this back to $r[m]$ we get
+     Applying this back to $r[m]$ we can compute $r[m]$ for different values of $m$ to get
      \begin{equation*}
      \begin{aligned}
      r[0] = \vtH^T \vtH = \sum_{k=0}^{L_h-1}h[k]h^*[k] = \Vert \vtH\Vert^2\\
      r[1] = \sum_{k=0}^{L_h-1}h[k]h^*[k-1] \\
      r[2] = \sum_{k=0}^{L_h-1}h[k]h^*[k-2] \\
-     \vdots \\
+     \vdots \qquad \qquad \\
      \end{aligned}
      \end{equation*}
 
      Therefore, the general formula for $r[m]$ is given by
 
      \begin{equation*}
-     \boxed{r[m] = \sum_{k=0}^{L_h-1}h[k]h^*[k-m]}
+     \boxed{r[m] = \sum_{k=0}^{L_h-1}h[k]h^*[k-m]}.
      \end{equation*}
   
      For the value of $\vtP$ we have that
@@ -104,15 +103,15 @@
      \begin{equation*}
      \begin{aligned}
      \vtP & = \E\{\vtU[n] x^*[n-M+1]\} = \begin{bmatrix} \E\{u[n] x^*[n-M+1]\} \\ \E\{u[n-1] x^*[n-M+1]\} \\ \vdots \\ \E\{u[n-M+1] x^*[n-M+1]\}\end{bmatrix} \\
-     & = \begin{bmatrix} \displaystyle \E \left\{ \left(\sum_{k=0}^{L_h-1}h[k]x[n-k] \right)   x^*[n-M+1]   \right\} \\ \displaystyle \E \left\{ \left(\sum_{k=0}^{L_h-1}h[k]x[n-k-1] \right)   x^*[n-M+1]   \right\} \\ \vdots \\ \displaystyle \E \left\{ \left(\sum_{k=0}^{L_h-1}h[k]x[n-k-M+1] \right)   x^*[n-M+1]   \right\}\end{bmatrix} \\
-     & = \begin{bmatrix} \displaystyle \sum_{k=0}^{L_h-1} \E\left\{h[k]x[n-k] x^*[n-M+1] \right\} \\ \displaystyle \sum_{k=0}^{L_h-1} \E\left\{h[k]x[n-k-1] x^*[n-M+1] \right\} \\ \vdots \\ \displaystyle \sum_{k=0}^{L_h-1} \E\left\{h[k]x[n-k-M+1] x^*[n-M+1] \right\}\end{bmatrix}
+     \vtP & = \begin{bmatrix} \displaystyle \E \left\{ \left(\sum_{k=0}^{L_h-1}h[k]x[n-k] \right)   x^*[n-M+1]   \right\} \\ \displaystyle \E \left\{ \left(\sum_{k=0}^{L_h-1}h[k]x[n-k-1] \right)   x^*[n-M+1]   \right\} \\ \vdots \\ \displaystyle \E \left\{ \left(\sum_{k=0}^{L_h-1}h[k]x[n-k-M+1] \right)   x^*[n-M+1]   \right\}\end{bmatrix} \\
+     \vtP & = \begin{bmatrix} \displaystyle \sum_{k=0}^{L_h-1} \E\left\{h[k]x[n-k] x^*[n-M+1] \right\} \\ \displaystyle \sum_{k=0}^{L_h-1} \E\left\{h[k]x[n-k-1] x^*[n-M+1] \right\} \\ \vdots \\ \displaystyle \sum_{k=0}^{L_h-1} \E\left\{h[k]x[n-k-M+1] x^*[n-M+1] \right\}\end{bmatrix}
      \end{aligned}
      \end{equation*}
 
      Due to the expectation only one term in each summation will be equal to 1
      times the corresponding channel tap and all other terms will be equal to
-     zero. We have then that
-     $$\vtP = \begin{bmatrix} h[M-1] \\ h[M-2] \\ \vdots \\ h[0]\end{bmatrix}$$
+     zero. The value of \(\vtP\) is then given by
+     \[\vtP = \begin{bmatrix} h[M-1] \\ h[M-2] \\ \vdots \\ h[0]\end{bmatrix}.\]
 
   d. 
      The Wiener solution is given by $\vtW = \mtR^{-1}\vtP$ where 
@@ -127,8 +126,8 @@
      aa^*+bb^* & ba^* \\ ab^* & aa^*+bb^*
      \end{bmatrix} = 
      \begin{bmatrix}
-     a^2+b^2 & ba^* \\ ab^* & a^2+b^2
-     \end{bmatrix}
+     \vert a\vert^2+\vert b\vert^2 & ba^* \\ ab^* & \vert a\vert^2+\vert b\vert^2
+     \end{bmatrix}.
      \end{equation*}
 
      In order to compute the inverse of $\mtR$ let's first compute its
@@ -143,7 +142,7 @@
      \end{bmatrix}
      \end{equation*}
      
-     Therefore, the Wiener solution is given by
+     Now we can compute the Wiener solution, which is given by
      
      \begin{equation*}
      \begin{aligned}
@@ -153,41 +152,61 @@
      \end{aligned}
      \end{equation*}
 
-     If we set $b=0$ then $M=1$ and we have that \(w = \frac{a}{\vert a \vert^2}\) and the error is given by
-     \[e[n] = d[n] - y[n] = x[n - 1 + 1] - \frac{a^*}{\vert a \vert^2} (a x[n]) = 0.\]
+     If we set $b=0$ then $M=1$ and we have that \(w = \frac{a}{\vert a \vert^2}\). 
+     The error is given by
+     \[e[n] = d[n] - y[n] = x[n - 1 + 1] - \frac{a^*}{\vert a \vert^2} (a x[n]) = x[n] - x[n] = 0.\]
 
   e. 
      Now we have that \(\vtH = \begin{bmatrix} 4 & -5\end{bmatrix}^T\) and
-     since \(M = 6\) the covariance matrix is a \(6 \times 6\) matrix given by
+     since \(M = 6\) the covariance matrix is a \(6 \times 6\) Toeplitz matrix given by
 
-     \begin{equation}
+     \begin{equation*}
      \mtR = \begin{bmatrix}41 & -20 & 0 & 0 & 0 & 0\\-20 & 41 & -20 & 0 & 0 & 0\\0 & -20 & 41 & -20 & 0 & 0\\0 & 0 & -20 & 41 & -20 & 0\\0 & 0 & 0 & -20 & 41 & -20\\0 & 0 & 0 & 0 & -20 & 41\end{bmatrix}
-     \end{equation}
+     \end{equation*}
 
      with the wiener solution given by
 
      \begin{equation*}
-     \vtW = \left[\begin{matrix}-0.0308479052192436\\-0.0632382056994494\\-0.0987904164646277\\-0.139282148053037\\-0.186737987044099\\0.00646927461263472\end{matrix}\right]
+     \vtW = \begin{bmatrix}
+     \begin{matrix}-0.0308479052192436\\-0.0632382056994494\\-0.0987904164646277\\-0.139282148053037\\-0.186737987044099\\0.00646927461263472\end{matrix} 
+     \end{bmatrix}.
      \end{equation*}
 
-     Using this filter and simulating for 50000 random samples of a zero mean
+     Using this filter and simulating for 3500 random samples of a zero mean
      circularly complex Gaussian distribution with unitary variance resulted in
      a residual mean square error of 0.040465415688231844.
 
   f. 
-     The plot of the MSE is shown below. 
+     The plot of the MSE is shown below, where we can see a "linear" decreasing
+     (in the logarithm scale) of the MSE as the filter size increases.
 
-     [[./mse_for_varying_M.png]]
-
-     It is possible to see a "linear" decreasing
-     (considering the logarithmic scale for the y axis). Different from the
-     last item, where 50000 data points were simulated (more than enough), in
-     this item I have increased the number of data points to 10000000 to
-     improve the averaging of the MSE. Even that number is not enough for the
-     higher values of M, which explains the "jumping around" of the plot in the
-     higher values of M.
-
+     [[./mse_for_varying_M.pdf]]
      
 * Exercise 2
-  a. To be done
-  b. To be done
+  a. The bit errors for the 30 frames are shown in the plot below.
+
+     [[./bit_errors.pdf]]
+
+     Note that these are not average values and if the simulation is run again
+     a different number of bit errors will be obtained. Nevertheless, the
+     behavior is consistent in the sense that as more frames are transmitted
+     the LMS algorithm improves the solution and the number of bit errors goes
+     to zero. In fact, in most simulations the number of bit errors is
+     already equal to zero after 4 or 5 frames were by the 5th frame.transmitted.
+
+  b. The final solution obtained by the LMS algorithm after the 30 frames
+     were transmitted (addressed as \(\vtW_\text{LMS}\)) and the theoretical
+     solution from item 1e (addressed as \(\vtW_\text{Wiener}\)) are shown
+     below
+     
+     \begin{equation*}
+     \vtW_\text{LMS} = \begin{bmatrix}
+      -0.03381164 \\ -0.05669194 \\ -0.09766999 \\ -0.13123297 \\ -0.19528921 \\ 0.01007806
+     \end{bmatrix} \qquad
+     \vtW_\text{LMS} = \begin{bmatrix}
+     \begin{matrix}-0.0308479052192436\\-0.0632382056994494\\-0.0987904164646277\\-0.139282148053037\\-0.186737987044099\\0.00646927461263472\end{matrix}
+     \end{bmatrix}.
+     \end{equation*}
+
+     As we can see, the LMS filter was able to obtain a solution close to the
+     Wiener solution.
