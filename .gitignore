@@ -4,6 +4,9 @@ auto
 *.synctex.gz
 *.out
 *~
+*.snm
+*.toc
+*.nav
 .ipynb_checkpoints
 __pycache__
 MathJax-master

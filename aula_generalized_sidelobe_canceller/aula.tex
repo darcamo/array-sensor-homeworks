@@ -1,0 +1,330 @@
+\documentclass{beamer}
+% \documentclass[draft,handout]{beamer}
+% \documentclass[handout, notes=show/hide/only]{beamer}
+% \usepackage[orientation=landscape,size=custom,width=16,height=9,scale=0.5,debug]{beamerposter}
+
+\mode<presentation>
+{
+  \usetheme{CambridgeUS}
+%   Possible Themes:
+%   "AnnArbor" "Antibes" "Bergen" "Berkeley" "Berlin" "Boadilla"
+%   "boxes" "CambridgeUS" "Copenhagen" "Darmstadt" "Dresden"
+%   "Frankfurt" "Goettingen" "Hannover" "Ilmenau" "JuanLesPins"
+%   "Luebeck" "Madrid" "Malmoe" "Marburg" "Montpellier" "PaloAlto"
+%   "Pittsburgh" "Rochester" "Singapore" "Szeged" "Warsaw"
+%   "default"
+%
+%   Best Ones:
+%   AnnArbor or CambridgeUS, Dresden or Frankfurt or Singapore, Goettingen or Hannover or Marburg, JuanLesPins, Madrid, PaloAlto, Warsaw
+
+  \setbeamercovered{transparent} % How uncovered text showld appear. Possible values are: invisible,
+                                 % transparent, dynamic, highly dynamic, still covered, still
+                                 % covered, again covered.
+  % \usecolortheme{wolverine}
+%   \usefonttheme{serif}
+%   \useinnertheme{circles}
+%   \useoutertheme{shadow}
+
+
+\usepackage[english]{babel}
+%\usepackage[latin1]{inputenc} % Use this if the file is encoded with windows encoding
+\usepackage[utf8]{inputenc} % Use this if the file is encoded with utf-8
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath} % Part of AMS-LaTeX
+% One of the good things of the amsmath package is the math enviroments matrix, pmatrix, bmatrix, Bmatrix, vmatrix and Vmatrix
+\usepackage{graphicx}
+\usepackage{pgf}
+%\usepackage{tikz} % Create graphics in Latex
+%\usepackage{listings} % Typeset source code for many languages
+
+% Pegue em http://www.guidodiepen.nl/2009/07/creating-latex-beamer-handouts-with-notes/
+%\usepackage{handoutWithNotes}
+%\pgfpagesuselayout{4 on 1 with notes}[a4paper,border shrink=5mm]
+
+% \setbeameroption{show notes}
+% \setbeameroption{show only notes}
+}
+
+\title%[short title] % [short title] (optional, use only with long paper titles)
+{Generalized Sidelobe Canceller}
+
+%\subtitle{Include Only If Paper Has a Subtitle} % (optional)
+
+\author%[Author, Another] % (Optional, use only with lots of authors)
+{Darlan Cavalcante Moreira}
+%{F.~Author\inst{1} \and S.~Another\inst{2}}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different affiliation.
+
+\institute%[Universities of Somewhere and Elsewhere] % (Short version: optional, but mostly needed)
+{Universidade Federal do Ceará}
+% {
+%   \inst{1}
+%   Department of Computer Science\\
+%   University of Somewhere
+%   \and
+%   \inst{2}
+%   Department of Theoretical Philosophy\\
+%   University of Elsewhere}
+  % - Use the \inst command only if there are several affiliations.
+  % - Keep it simple, no one is interested in your street address.
+\date{\today}
+%\date[CFP 2003] % (optional, should be abbreviation of conference name)
+   %{Conference on Fabulous Presentations, 2003}
+   % - Either use conference name or its abbreviation.
+   % - Not really informative to the audience, more for people (including
+   %   yourself) who are reading the slides online
+
+
+% xxxxxxxxxx For "PDF information catalog", can be left out xxxxxxxxxxxxxxxxxxxx
+\subject{Subject of the presentation}
+\keywords{keyword1, kwyword2}
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+% this shows the outline at the beginning of every section,
+% highlighting the current section
+% \AtBeginSection[]
+% {
+%   \begin{frame}<beamer>{}
+%     \frametitle{Outline}
+%     \tableofcontents[currentsection]
+%   \end{frame}
+% }
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command:
+% \beamerdefaultoverlayspecification{<+->}
+% xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+% xxxxxxxxxxxxxxx Presentation Structure xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution:
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+% xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+% xxxxxxxxxxxxxxx Frame Options xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+% [plain] -> Use the "plain" option when you want a frame with just a picture or table without anything-else
+% [fragile] -> Use the "fragile" option when the verbatim environment or the \verb command is used inside the frame
+% You must also use the fragile option if you use the lstlisting environment since it is similar to verbatim
+
+
+% xxxxxxxxxxxxxxx Useful Tips xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+% Blocks are another nice way to make highlighted blocks of text (or anything).
+%
+% \begin{block}{Simple block}
+%   bla bla bla
+% \end{block}
+%
+% \begin{exampleblock}{Example block}
+%   bla bla bla
+% \end{exampleblock}
+%
+% \begin{alertblock}{}
+%   bla bla bla
+% \end{alertblock}
+%
+% Columns are for vertically organizing text.
+% The beamer screen is 128 mm $\times$ 96 mm.
+% Two columns of 6cm appears to work well. Remember to make
+% allowance for margins around the stuff inside a column. Three
+% columns of 4cm for figures may work as well.
+%   \begin{columns}[t] % try also others different of [t]
+%     \begin{column}{6cm}
+%       Stuff inside the first column
+%     \end{column}
+%     \begin{column}{6cm}
+%       Stuff inside the second column
+%     \end{column}
+%   \end{columns}
+%
+% You can use externally launched movies with
+% \href{run:default.avi}{click here to open the movie}
+%
+% Besides using overlays you can also emphasize using
+% \item<1- | alert@1>
+% \item<2- | alert@2> ...
+%
+% Overlays can also be used with blocks
+% \begin{block}{Some block}<1->
+%   bla bla bla
+% \end{block}
+% \begin{block}{Some other block}<2->
+%   bla bla bla
+% \end{bloc}
+%
+% Ofcourse overlays can also be used with images
+% \pgfuseimage{imagem1}<1>
+% \pgfuseimage{imagem2}<2>
+% \pgfuseimage{imagem3}<3>
+%
+% Example using columns:
+% \begin{columns}[t]
+%   \begin{column}{5cm}
+%     \pgfdeclareimage[width=5cm]{automato1}{automato1}
+%     \pgfuseimage{automato1}<1>
+%     \pgfdeclareimage[width=5cm]{automato2}{automato2}
+%     \pgfuseimage{automato2}<2>
+%     \pgfdeclareimage[width=5cm]{automato3}{automato3}
+%     \pgfuseimage{automato3}<3>
+%     \pgfdeclareimage[width=5cm]{automato4}{automato4}
+%     \pgfuseimage{automato4}<4>
+%   \end{column}
+%   \begin{column}{5cm}
+%     \begin{itemize}
+%     \item <1- | alert@1> Reconhecimento inicia no estado $q_1$
+%     \item <2- | alert@2> Transição para estado $q_2$
+%     \item <3- | alert@3> L^e $0$ e fica no estado $q_2$
+%     \item <4- | alert@4> Transição para o estado final $q_3$
+%     \end{itemize}
+%     \[\xymatrix{
+%      *++[o][F-]{q_1} \ar@(ul,ul)[] \ar[r]^{1}
+%      \ar[d]^{0} & *++[o][F=]{q_3} \\
+%      *++[o][F-]{q_2} \ar[ur]_{1} \ar@(dl,d)[]_{0} }\]
+%   \end{column}
+% \end{columns}
+% xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+\begin{document}
+
+% % xxxxxxxxxxxxxxxxxxxx Some tikz options xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+% % For every picture that defines or uses external nodes, you'll have to
+% % apply the 'remember picture' style. To avoid some typing, we'll apply
+% % the style to all pictures.
+% \tikzstyle{every picture}+=[remember picture]
+
+% % By default all math in TikZ nodes are set in inline mode. Change this to
+% % displaystyle so that we don't get small fractions.
+% \everymath{\displaystyle}
+% % xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+% \part{Part 1}
+
+% beamer makes the titlepage from info above: author, date, title, etc.
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%% Frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Spatial Filtering}
+
+  \begin{itemize}
+    
+    \item \textbf{This class}: Generalized Sidelobe Canceller (GSC)
+    
+    % \begin{itemize}
+    %   \item splits an array's incoming signals sending them through a
+    %   \textbf{conventional beamformer path} and a \textbf{sidelobe canceling
+    %     path}
+    
+    %   \item first presteers the array to the beamforming direction and then
+    %   adaptively chooses filter weights to minimize power at the output of the
+    %   sidelobe canceling path
+    % \end{itemize}
+    \item \textbf{Sidelobe Canceller:} separate ``something we want'' from ``something
+    we don't want''
+    
+    \item We can visualize what we don't want as the sidelobes of the
+    equivalent antenna pattern of the array, which we want to reduce without
+    hurting the main lobe
+    
+    
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%% End Frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%% Frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Generalized Sidelobe Canceller}
+
+  \begin{itemize}
+    \item Fingind the GCS filter corresponds to a minimization problem with linear
+    constraints
+    
+    \item The filter weights corresponds to antenna elements (spatial dimension)
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%% End Frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%% Frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{bla bla}
+
+
+  \begin{itemize}
+    \item Objective
+    \item Limitations
+    
+    \begin{itemize}
+      \item Robustness to errors?
+    \end{itemize}
+    
+    \item Interesting Variations?
+    \begin{itemize}
+      \item A Robust Adaptive Generalized Sidelobe Canceller
+      With Decision Feedback (2005)
+
+      \url{https://ir.nctu.edu.tw/bitstream/11536/13077/1/000233350100048.pdf}
+      
+      \item A robust generalized sidelobe canceller via steering vector estimation (2016)
+
+      \url{http://asp.eurasipjournals.springeropen.com/articles/10.1186/s13634-016-0358-7}
+      
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%% End Frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%% Frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{MATLAB Code}
+
+  https://www.mathworks.com/help/phased/ref/phased.gscbeamformer-class.html
+  
+  The phased.GSCBeamformer System object™ implements a generalized sidelobe cancellation (GSC) beamformer. A GSC beamformer splits an array's incoming signals sends them through a conventional beamformer path and a sidelobe canceling path. The algorithm first presteers the array to the beamforming direction and then adaptively chooses filter weights to minimize power at the output of the sidelobe canceling path. The algorithm uses least mean squares (LMS) to compute the adaptive weights. The final beamformed signal is the difference between the outputs of the two paths.
+
+  
+\end{frame}
+%%%%%%%%%%%%%%%%%%%% End Frame %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
